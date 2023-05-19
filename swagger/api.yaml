@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: GitHub Metrics API
+  version: 1.0.0
+  description: API for retrieving GitHub metrics
+paths:
+  /tasks/{taskId}:
+    get:
+      summary: Get information about a specific task
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+  /tasks/completed:
+    get:
+      summary: Get completed tasks within a specified period
+      parameters:
+        - name: startDate
+          in: query
+          description: Start date of the period
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: End date of the period
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+  /columns/{columnId}/tasks:
+    get:
+      summary: Get tasks in a specified column
+      parameters:
+        - name: columnId
+          in: path
+          description: ID of the column
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+  /pull-requests:
+    get:
+      summary: Get pull requests
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PullRequest'
+  /pull-requests/{prId}:
+    get:
+      summary: Get information about a specific pull request
+      parameters:
+        - name: prId
+          in: path
+          description: ID of the pull request
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullRequest'
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        taskId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - completed
+    PullRequest:
+      type: object
+      properties:
+        prId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        author:
+          type: string
+        status:
+          type: string
+          enum:
+            - open
+            - closed
+            - merged
