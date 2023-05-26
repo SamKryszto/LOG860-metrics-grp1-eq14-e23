@@ -1,13 +1,17 @@
 version: '3.7'
 services:
   app:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      ports:
-        - "3000:3000"
-      environment:
-        GITHUB_TOKEN: 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
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      GITHUB_TOKEN: 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
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    depends_on:
+      - "postgres"
   
   swagger-ui:
     image: swaggerapi/swagger-ui
@@ -23,7 +27,6 @@ services:
     container_name: postgres
     image: postgres:latest
     restart: always
-    user: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -46,6 +49,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     restart: always
+    user: root
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
