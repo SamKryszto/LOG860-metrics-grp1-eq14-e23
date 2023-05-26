@@ -62,7 +62,7 @@ pour accéder à la liste des API disponible à partir du navigateur :
 
 ## Contact
 
-Fabrice Lu : fabrice.lu.1@ens.etsmtl.ca
+
 
 
 

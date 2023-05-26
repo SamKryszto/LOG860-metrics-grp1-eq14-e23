@@ -14,4 +14,13 @@ utilise la technologie de versionnage Git.
 
 ## Création d'une tâche
 
+Lien de départ : https://github.com/SamKryszto/Oxgen-OS---Eq-14--E23/projects?query=is%3Aopen
+
+
+1. Cliquer sur un projet au choix
+
+2. Cliquer sur le bouton Add item
+
+3. Remplir la case vide
+
 ## ---
