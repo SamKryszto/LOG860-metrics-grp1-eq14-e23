@@ -6,6 +6,8 @@ services:
         dockerfile: Dockerfile
       ports:
         - "3000:3000"
+      environment:
+        GITHUB_TOKEN: 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
   
   swagger-ui:
     image: swaggerapi/swagger-ui
