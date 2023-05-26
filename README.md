@@ -37,12 +37,12 @@ Veuillez suivre les instructions pour l'installation de docker :
 
 Pour exécuter l'application sur windows dans l'invite de commande à partir du dossier de projet :  
 ```
-docker compose up -d
+docker compose up --build
 ```
 
 
 pour accéder à la liste des API disponible à partir du navigateur :
-[http://localhost:8001/](http://localhost:8001/)
+[http://localhost:3000/](http://localhost:3000/)
 
 
 ## Justification des métriques

@@ -1,18 +1,5 @@
 version: '3.7'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      GITHUB_TOKEN: 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
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    depends_on:
-      - "postgres"
-  
   swagger-ui:
     image: swaggerapi/swagger-ui
     container_name: swagger-ui
@@ -26,6 +13,7 @@ services:
   postgres:
     container_name: postgres
     image: postgres:latest
+    user: postgres
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -57,3 +45,17 @@ services:
       - "5050:80"
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      GITHUB_TOKEN: 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
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PORT: 3000
+    depends_on:
+      - "postgres"
