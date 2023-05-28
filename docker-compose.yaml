@@ -1,5 +1,19 @@
 version: '3.7'
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      GITHUB_TOKEN: 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
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PORT: 3000
+    # depends_on:
+    #   - "postgres"
+
   swagger-ui:
     image: swaggerapi/swagger-ui
     container_name: swagger-ui
@@ -9,7 +23,7 @@ services:
       - ./swagger:/usr/share/nginx/html/swagger
     environment:
       API_URL: swagger/api.yaml
-  
+
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -19,6 +33,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_MAX_CONNECTIONS=100
+      - PGDATA=./data/postgres-data
     logging:
       options:
         max-size: 10m
@@ -45,17 +60,3 @@ services:
       - "5050:80"
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      GITHUB_TOKEN: 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
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PORT: 3000
-    depends_on:
-      - "postgres"
