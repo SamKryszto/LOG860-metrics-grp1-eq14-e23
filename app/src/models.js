@@ -37,7 +37,7 @@ PullRequest.hasMany(Task, { foreignKey: 'prId' });
 
 // Sync the models with the database
 sequelize
-  .authenticate()
+  .sync()
   .then(() => {
     console.log('Database synced');
   })
