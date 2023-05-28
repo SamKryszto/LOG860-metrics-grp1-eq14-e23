@@ -20,6 +20,7 @@ app.get('/metrics/lead_time/:id', async (req, res) => {
             method: 'post',
             headers: {
                 authorization: `bearer ${process.env.GITHUB_TOKEN}`
+                // authorization: `bearer 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`
             },
             data: {
                 query: `
