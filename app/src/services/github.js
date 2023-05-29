@@ -1,6 +1,6 @@
 const util = require("util");
 const axios = require("axios");
-const { requests } = require("./strings");
+const { requests } = require("../strings");
 
 async function githubRequest(query, ...params) {
     try {
