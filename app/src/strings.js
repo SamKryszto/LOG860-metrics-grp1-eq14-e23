@@ -1,83 +1,72 @@
 // TODO: change requests qraphql strings
 
+const DEFAULT_OWNER = "SamKryszto";
+
+const DEFAULT_REPO = "Oxgen-OS---Eq-14--E23";
+
+const BASE_QUERY = `
+{
+    repository(name: "%s", owner: "%s") {
+        %s
+    }
+}`;
+
 const requests = {
     GET_TASK_LEAD_TIME: `
-    {
-        user(login: "SamKryszto") {
-            projectV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_LEAD_TIME: `
-    {
-        user(login: "SamKryszto") {
-            projectV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_LEAD_TIME: `
-    {
-        user(login: "SamKryszto") {
-            projectV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_ACTIVE_TASKS_COUNT: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_COMPLETED_TASKS_COUNT: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_PR_METRIC1: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_PR_METRIC2: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_PR_METRIC3: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_PR_METRIC4: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_PR_METRIC5: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
     GET_SNAPSHOT: `
-    {
-        user(login: "SamKryszto") {
-            projectsV2() {
-            }
+        projectsV2(first: 10) {
+            totalCount
         }
-    }`,
+    `,
 };
 
-module.exports = { requests };
+module.exports = { requests, DEFAULT_OWNER, DEFAULT_REPO, BASE_QUERY };

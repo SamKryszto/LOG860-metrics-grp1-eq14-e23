@@ -1,13 +1,25 @@
 const util = require("util");
 const axios = require("axios");
-const { requests } = require("../strings");
+const {
+    requests,
+    DEFAULT_OWNER,
+    DEFAULT_REPO,
+    BASE_QUERY,
+} = require("../strings");
 
-async function githubRequest(query, ...params) {
+async function githubRequest(
+    subQuery,
+    owner = DEFAULT_OWNER,
+    name = DEFAULT_REPO,
+    ...params
+) {
     try {
         const headers = {
             Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         };
-        query = util.format(query, ...params);
+        subQuery = util.format(subQuery, ...params);
+        query = util.format(BASE_QUERY, owner, name, subQuery);
+        console.log({ query });
         const { data } = await axios.post(
             "https://api.github.com/graphql",
             { query },
