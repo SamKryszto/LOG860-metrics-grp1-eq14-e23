@@ -12,6 +12,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - "./app:/usr/src/app"
 
   swagger-ui:
     image: swaggerapi/swagger-ui

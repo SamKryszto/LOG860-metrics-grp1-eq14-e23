@@ -1,13 +1,14 @@
 FROM node:14
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the working directory
-COPY src/ ./
-COPY package*.json ./
+COPY src/ /usr/src/app
+COPY package*.json /usr/src/app
 
 # Install dependencies
+RUN npm install -g nodemon
 RUN npm install
 
 # Copy the rest of the application code
@@ -17,4 +18,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the Node.js application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
