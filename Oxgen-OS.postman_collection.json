@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "e76df782-dfcf-41d4-ae62-373edc5469ee",
+		"name": "Oxgen-OS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "lead_time/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/lead_time/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"lead_time",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lead_time",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/lead_time",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"lead_time"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "active_tasks_count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/active_tasks_count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"active_tasks_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "completed_tasks_count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/completed_tasks_count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"completed_tasks_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_m1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_m1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_m1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_m2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_m2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_m2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_m3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_m3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_m3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_m4",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_m4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_m4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_m5",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_m5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_m5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "snapshot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/snapshot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"snapshot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "snapshot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/snapshot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"snapshot"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
