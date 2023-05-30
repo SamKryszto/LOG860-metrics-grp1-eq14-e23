@@ -1,26 +1,46 @@
+const DEFAULT_REPO = "Oxgen-OS---Eq-14--E23";
+const DEFAULT_OWNER = "SamKryszto";
+
 const models = require("../models/models"); // Import your Sequelize models
 const githubService = require("../services/github");
 
 async function getTaskLeadTime(req, res) {
+    const repo = req.query.repo || DEFAULT_REPO;
+    const owner = req.query.owner || DEFAULT_OWNER;
     const id = req.params.id;
-    const result = await githubService.getTaskLeadTime(id);
+    const result = await githubService.getTaskLeadTime(repo, owner, id);
     res.send(result);
 }
 
 async function getLeadTime(req, res) {
-    const result = await githubService.getLeadTime();
+    const repo = req.query.repo || DEFAULT_REPO;
+    const owner = req.query.owner || DEFAULT_OWNER;
+
+    const start = req.query.start;
+    const end = req.query.end;
+
+    const result = await githubService.getLeadTime(repo, owner, start, end);
     res.send(result);
 }
 
 async function getActiveTasksCount(req, res) {
-    const { column } = req.query;
-    const result = await githubService.getActiveTasksCount(column);
+    const repo = req.query.repo || DEFAULT_REPO;
+    const owner = req.query.owner || DEFAULT_OWNER;
+
+
+    const column = req.query.column;
+    const result = await githubService.getActiveTasksCount(repo, owner, column);
     res.send(result);
 }
 
 async function getCompletedTasksCount(req, res) {
-    const { column } = req.query;
-    const result = await githubService.getCompletedTasksCount(column);
+    const repo = req.query.repo || DEFAULT_REPO;
+    const owner = req.query.owner || DEFAULT_OWNER;
+
+    const start = req.query.start;
+    const end = req.query.end;
+    
+    const result = await githubService.getCompletedTasksCount(repo, owner, start, end);
     res.send(result);
 }
 
