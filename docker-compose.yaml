@@ -14,6 +14,7 @@ services:
         condition: service_healthy
     volumes:
       - "./app:/usr/src/app"
+      - /usr/src/app/node_modules
 
   swagger-ui:
     image: swaggerapi/swagger-ui
