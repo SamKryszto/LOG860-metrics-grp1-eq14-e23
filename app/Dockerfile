@@ -4,8 +4,8 @@ FROM node:14
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the working directory
-COPY src/ /usr/src/app
-COPY package*.json /usr/src/app
+COPY src/ /usr/src/
+COPY package*.json /usr/src/
 
 # Install dependencies
 RUN npm install -g nodemon
