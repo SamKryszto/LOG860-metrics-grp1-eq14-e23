@@ -30,8 +30,13 @@ async function getCompletedTasksCount(req, res) {
 
     const start = req.query.start;
     const end = req.query.end;
-    
-    const result = await githubService.getCompletedTasksCount(repo, owner, start, end);
+
+    const result = await githubService.getCompletedTasksCount(
+        repo,
+        owner,
+        start,
+        end
+    );
     res.send(result);
 }
 
