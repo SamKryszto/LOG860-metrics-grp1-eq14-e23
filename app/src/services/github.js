@@ -68,14 +68,12 @@ async function getCompletedTasksCount(column) {
 // ----------------
 
 async function getPRCount(owner, repo) {
-    // TODO: rename function/request string and implement
     const { data } = await githubRequest(requests.GET_PR_COUNT, owner, repo);
     const { totalCount } = data.repository.pullRequests;
     return `Number of pull requests: ${totalCount}.`;
 }
 
 async function getPRState(owner, repo, id) {
-    // TODO: rename function/request string and implement
     const { data } = await githubRequest(
         requests.GET_PR_STATE,
         owner,
@@ -87,7 +85,6 @@ async function getPRState(owner, repo, id) {
 }
 
 async function getPRMergeTime(owner, repo, id) {
-    // TODO: rename function/request string and implement
     const { data } = await githubRequest(
         requests.GET_PR_MERGE_TIME,
         owner,
@@ -102,7 +99,6 @@ async function getPRMergeTime(owner, repo, id) {
 }
 
 async function getPRCommentsCount(owner, repo, id) {
-    // TODO: rename function/request string and implement
     const { data } = await githubRequest(
         requests.GET_PR_COMMENTS_COUNT,
         owner,
@@ -114,7 +110,6 @@ async function getPRCommentsCount(owner, repo, id) {
 }
 
 async function getPRReviewers(owner, repo, id) {
-    // TODO: rename function/request string and implement
     const { data } = await githubRequest(
         requests.GET_PR_REVIEWERS,
         owner,
