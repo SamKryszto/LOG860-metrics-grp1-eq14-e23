@@ -6,6 +6,7 @@ const {
     DEFAULT_REPO,
     BASE_QUERY,
 } = require("../strings");
+const { diffDates } = require("../utils");
 
 async function githubRequest(
     subQuery,
@@ -18,7 +19,7 @@ async function githubRequest(
             Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         };
         subQuery = util.format(subQuery, ...params);
-        query = util.format(BASE_QUERY, owner, name, subQuery);
+        query = util.format(BASE_QUERY, name, owner, subQuery);
         console.log({ query });
         const { data } = await axios.post(
             "https://api.github.com/graphql",
@@ -66,34 +67,64 @@ async function getCompletedTasksCount(column) {
 // PULL REQUEST METRICS
 // ----------------
 
-async function getPRMetric1() {
+async function getPRCount(owner, repo) {
     // TODO: rename function/request string and implement
-    const data = await githubRequest(requests.GET_PR_METRIC1);
-    return {};
+    const { data } = await githubRequest(requests.GET_PR_COUNT, owner, repo);
+    const { totalCount } = data.repository.pullRequests;
+    return `Number of pull requests: ${totalCount}.`;
 }
 
-async function getPRMetric2() {
+async function getPRState(owner, repo, id) {
     // TODO: rename function/request string and implement
-    const data = await githubRequest(requests.GET_PR_METRIC2);
-    return {};
+    const { data } = await githubRequest(
+        requests.GET_PR_STATE,
+        owner,
+        repo,
+        id
+    );
+    const { state } = data.repository.pullRequest;
+    return `State of pull request ${id}: ${state}.`;
 }
 
-async function getPRMetric3() {
+async function getPRMergeTime(owner, repo, id) {
     // TODO: rename function/request string and implement
-    const data = await githubRequest(requests.GET_PR_METRIC3);
-    return {};
+    const { data } = await githubRequest(
+        requests.GET_PR_MERGE_TIME,
+        owner,
+        repo,
+        id
+    );
+    const { createdAt, mergedAt } = data.repository.pullRequest;
+    const createdAtTime = new Date(createdAt).getTime();
+    const mergedAtTime = new Date(mergedAt).getTime();
+    const { days, hours, minutes } = diffDates(createdAtTime, mergedAtTime);
+    return `Merge time for pull request ${id}: ${days} days, ${hours} hours, ${minutes} minutes.`;
 }
 
-async function getPRMetric4() {
+async function getPRCommentsCount(owner, repo, id) {
     // TODO: rename function/request string and implement
-    const data = await githubRequest(requests.GET_PR_METRIC4);
-    return {};
+    const { data } = await githubRequest(
+        requests.GET_PR_COMMENTS_COUNT,
+        owner,
+        repo,
+        id
+    );
+    const { totalCount } = data.repository.pullRequest.comments;
+    return `Number of comments for pull request ${id}: ${totalCount}.`;
 }
 
-async function getPRMetric5() {
+async function getPRReviewers(owner, repo, id) {
     // TODO: rename function/request string and implement
-    const data = await githubRequest(requests.GET_PR_METRIC5);
-    return {};
+    const { data } = await githubRequest(
+        requests.GET_PR_REVIEWERS,
+        owner,
+        repo,
+        id
+    );
+    const reviewers = data.repository.pullRequest.reviewRequests.nodes.map(
+        (rq) => rq.requestedReviewer.login
+    );
+    return `Reviewers for pull request ${id}: ${reviewers.join(", ")}.`;
 }
 
 // ----------------
@@ -112,10 +143,10 @@ module.exports = {
     getLeadTime,
     getActiveTasksCount,
     getCompletedTasksCount,
-    getPRMetric1,
-    getPRMetric2,
-    getPRMetric3,
-    getPRMetric4,
-    getPRMetric5,
+    getPRCount,
+    getPRState,
+    getPRMergeTime,
+    getPRCommentsCount,
+    getPRReviewers,
     getSnapshot,
 };

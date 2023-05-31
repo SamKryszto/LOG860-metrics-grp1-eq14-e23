@@ -37,29 +37,41 @@ const requests = {
             totalCount
         }
     `,
-    GET_PR_METRIC1: `
-        projectsV2(first: 10) {
+    GET_PR_COUNT: `
+        pullRequests(first: 100) {
             totalCount
         }
     `,
-    GET_PR_METRIC2: `
-        projectsV2(first: 10) {
-            totalCount
+    GET_PR_STATE: `
+        pullRequest(number: %s) {
+            state
         }
     `,
-    GET_PR_METRIC3: `
-        projectsV2(first: 10) {
-            totalCount
+    GET_PR_MERGE_TIME: `
+        pullRequest(number: %s) {
+            mergedAt
+            createdAt
         }
     `,
-    GET_PR_METRIC4: `
-        projectsV2(first: 10) {
-            totalCount
+    GET_PR_COMMENTS_COUNT: `
+        pullRequest(number: %s) {
+            comments {
+                totalCount
+            }
+            title
         }
     `,
-    GET_PR_METRIC5: `
-        projectsV2(first: 10) {
-            totalCount
+    GET_PR_REVIEWERS: `
+        pullRequest(number: %s) {
+            reviewRequests(first: 10) {
+                nodes {
+                    requestedReviewer {
+                        ... on User {
+                            login
+                        }
+                    }
+                }
+            }
         }
     `,
     GET_SNAPSHOT: `
