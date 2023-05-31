@@ -13,28 +13,51 @@ const BASE_QUERY = `
 
 const requests = {
     GET_TASK_LEAD_TIME: `
-        projectsV2(first: 10) {
-            totalCount
+        issue(number: %s) {
+            createdAt
+            closedAt
         }
     `,
     GET_LEAD_TIME: `
-        projectsV2(first: 10) {
-            totalCount
+        issues(first: 100, filterBy: {states: CLOSED}) {
+            nodes {
+                number
+                createdAt
+                closedAt
+            }
         }
     `,
-    GET_LEAD_TIME: `
-        projectsV2(first: 10) {
-            totalCount
-        }
-    `,
+
     GET_ACTIVE_TASKS_COUNT: `
-        projectsV2(first: 10) {
-            totalCount
+        projectsV2(first: 1) {
+            nodes {
+                view(number: 1) {
+                    project {
+                        items(first: 100) {
+                            nodes {
+                                fieldValues(first: 100) {
+                                    edges {
+                                        node {
+                                            ... on ProjectV2ItemFieldSingleSelectValue {
+                                                name
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     `,
     GET_COMPLETED_TASKS_COUNT: `
-        projectsV2(first: 10) {
-            totalCount
+        issues(first: 100, filterBy: {states: CLOSED}) {
+            nodes {
+                number
+                createdAt
+                closedAt
+            }
         }
     `,
     GET_PR_COUNT: `
