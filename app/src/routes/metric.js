@@ -12,11 +12,11 @@ router.get("/completed_tasks_count", controller.getCompletedTasksCount);
 // ----------------
 // PULL REQUEST METRICS
 // ----------------
-router.get("/pr_m1", controller.getPRMetric1);
-router.get("/pr_m2", controller.getPRMetric2);
-router.get("/pr_m3", controller.getPRMetric3);
-router.get("/pr_m4", controller.getPRMetric4);
-router.get("/pr_m5", controller.getPRMetric5);
+router.get("/pr_count", controller.getPRCount);
+router.get("/pr_state/:id", controller.getPRState);
+router.get("/pr_merge_time/:id", controller.getPRMergeTime);
+router.get("/pr_comments_count/:id", controller.getPRCommentsCount);
+router.get("/pr_reviewers/:id", controller.getPRReviewers);
 
 // ----------------
 // VISUALIZATION METRICS

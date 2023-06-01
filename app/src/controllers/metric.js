@@ -2,25 +2,41 @@ const models = require("../models/models"); // Import your Sequelize models
 const githubService = require("../services/github");
 
 async function getTaskLeadTime(req, res) {
+    const { owner, repo } = req.query;
     const id = req.params.id;
-    const result = await githubService.getTaskLeadTime(id);
+    const result = await githubService.getTaskLeadTime(repo, owner, id);
     res.send(result);
 }
 
 async function getLeadTime(req, res) {
-    const result = await githubService.getLeadTime();
+    const { owner, repo } = req.query;
+    const start = req.query.start;
+    const end = req.query.end;
+
+    const result = await githubService.getLeadTime(repo, owner, start, end);
     res.send(result);
 }
 
 async function getActiveTasksCount(req, res) {
-    const { column } = req.query;
-    const result = await githubService.getActiveTasksCount(column);
+    const { owner, repo } = req.query;
+
+    const column = req.query.column;
+    const result = await githubService.getActiveTasksCount(repo, owner, column);
     res.send(result);
 }
 
 async function getCompletedTasksCount(req, res) {
-    const { column } = req.query;
-    const result = await githubService.getCompletedTasksCount(column);
+    const { owner, repo } = req.query;
+
+    const start = req.query.start;
+    const end = req.query.end;
+
+    const result = await githubService.getCompletedTasksCount(
+        repo,
+        owner,
+        start,
+        end
+    );
     res.send(result);
 }
 
@@ -28,28 +44,37 @@ async function getCompletedTasksCount(req, res) {
 // PULL REQUEST METRICS
 // ----------------
 
-async function getPRMetric1(req, res) {
-    const result = await githubService.getPRMetric1();
+async function getPRCount(req, res) {
+    const { owner, repo } = req.query;
+    const result = await githubService.getPRCount(owner, repo);
     res.send(result);
 }
 
-async function getPRMetric2(req, res) {
-    const result = await githubService.getPRMetric2();
+async function getPRState(req, res) {
+    const { id } = req.params;
+    const { owner, repo } = req.query;
+    const result = await githubService.getPRState(owner, repo, id);
     res.send(result);
 }
 
-async function getPRMetric3(req, res) {
-    const result = await githubService.getPRMetric3();
+async function getPRMergeTime(req, res) {
+    const { id } = req.params;
+    const { owner, repo } = req.query;
+    const result = await githubService.getPRMergeTime(owner, repo, id);
     res.send(result);
 }
 
-async function getPRMetric4(req, res) {
-    const result = await githubService.getPRMetric4();
+async function getPRCommentsCount(req, res) {
+    const { id } = req.params;
+    const { owner, repo } = req.query;
+    const result = await githubService.getPRCommentsCount(owner, repo, id);
     res.send(result);
 }
 
-async function getPRMetric5(req, res) {
-    const result = await githubService.getPRMetric5();
+async function getPRReviewers(req, res) {
+    const { id } = req.params;
+    const { owner, repo } = req.query;
+    const result = await githubService.getPRReviewers(owner, repo, id);
     res.send(result);
 }
 
@@ -75,11 +100,11 @@ module.exports = {
     getLeadTime,
     getActiveTasksCount,
     getCompletedTasksCount,
-    getPRMetric1,
-    getPRMetric2,
-    getPRMetric3,
-    getPRMetric4,
-    getPRMetric5,
+    getPRCount,
+    getPRState,
+    getPRMergeTime,
+    getPRCommentsCount,
+    getPRReviewers,
     saveSnapshot,
     getSnapshots,
 };
