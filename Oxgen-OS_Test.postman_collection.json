@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "6907a9d4-1d18-46e3-8a6e-c709cf05d4ae",
+		"name": "Oxgen-OS_Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17862753"
+	},
+	"item": [
+		{
+			"name": "lead_time/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Lead time for task\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/lead_time/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"lead_time",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lead_time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\" \");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/lead_time",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"lead_time"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "active_tasks_count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\" \");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/active_tasks_count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"active_tasks_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "completed_tasks_count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"must not contain undefined\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"undefined\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"issue(s) completed\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/completed_tasks_count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"completed_tasks_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Number of pull requests:\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_state",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"State of pull request\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_state/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_state",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_merge_time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Merge time for pull request\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"no negative number\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"-\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_merge_time/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_merge_time",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_comments_count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Number of comments for pull request\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_comments_count/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_comments_count",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pr_reviewers",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contain string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Reviewers for pull request\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/pr_reviewers/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"pr_reviewers",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "snapshot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/snapshot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"snapshot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "snapshot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"retourne une valeur\", function () {\r",
+							"    pm.expect(pm.response.text().length > 2).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/metric/snapshot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"snapshot"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
