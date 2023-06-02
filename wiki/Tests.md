@@ -5,5 +5,5 @@ Les tests implémentés pour cette itération sont des tests unitaires. Le modul
 ## Étapes pour exécuter les tests
 
 1. Partir les conteneurs avec ``docker compose up --build``
-2. Se connecter au conteneur node.js avec ``docker exec -it log680-lab1-app-1``
+2. Se connecter au conteneur node.js avec ``docker exec -it log680-lab1-app-1 sh``
 3. Exécuter la commande ``npm run test``
