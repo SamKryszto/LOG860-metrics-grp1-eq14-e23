@@ -2,16 +2,32 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const metricRouter = require("./routes/metric");
-const swaggerUI = require('swagger-ui-express');
-const yaml = require('yaml');
-const fs = require('fs');
-const doc = fs.readFileSync('./src/swagger/api.yaml','utf8');
-const api = yaml.parse(doc);
+const swaggerUi = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc");
 
+const swaggerDefinition = {
+    openapi: "3.0.0",
+    info: {
+        title: "Express API for JSONPlaceholder",
+        version: "1.0.0",
+    },
+    servers: [
+        {
+            url: "http://localhost:3000",
+            description: "Development server",
+        },
+    ],
+};
 
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ["./src/routes/*.js"],
+};
 
+const swaggerSpec = swaggerJSDoc(options);
 
-app.use("/", swaggerUI.serve,swaggerUI.setup(api));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/metric", metricRouter);
 

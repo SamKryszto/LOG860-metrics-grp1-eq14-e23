@@ -4,6 +4,34 @@ const controller = require("../controllers/metric");
 // ----------------
 // KANBAN METRICS
 // ----------------
+/**
+ * @swagger
+ * /metric/lead_time:
+ *     get:
+ *         summary: Retrieve lead time of each issues.
+ *         description: Retrieve lead time of each issues.
+ *         parameters:
+ *             - in: query
+ *               name: start
+ *               required: true
+ *               description: Start date
+ *               schema:
+ *                   type: string
+ *             - in: query
+ *               name: end
+ *               required: true
+ *               description: End date
+ *               schema:
+ *                   type: string
+ *         reponses:
+ *             200:
+ *                 description: Lead time of each issues.
+ *                 content:
+ *                     text/html; charset=utf-8:
+ *                         schema:
+ *                             type: string
+ * 
+ */
 router.get("/lead_time", controller.getLeadTime);
 router.get("/lead_time/:id", controller.getTaskLeadTime);
 router.get("/active_tasks_count", controller.getActiveTasksCount);
