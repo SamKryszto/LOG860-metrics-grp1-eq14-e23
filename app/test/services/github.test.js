@@ -180,14 +180,14 @@ describe("getActiveTasksCount", () => {
             res,
             "should return their count",
             "TODO",
-            { TODO: 2 },
+            "Status Counts for column 'TODO': 2",
         ],
         [
             "when graphql call returns no issues for column specified",
             res,
             "should return their count equal to 0",
             "In Progress",
-            {},
+            "Status Counts for column 'In Progress': 0",
         ],
     ])("%s", (name, res, testName, columnName, expected) => {
         it(testName, async () => {

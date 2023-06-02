@@ -123,7 +123,7 @@ async function getActiveTasksCount(repo, owner, columnName) {
         });
     });
 
-    return `Status Counts for column '${columnName}': ${columnCounts[columnName]}`;
+    return `Status Counts for column '${columnName}': ${columnCounts[columnName] ?? 0}`;
 }
 
 async function getCompletedTasksCount(repo, owner, start, end) {
