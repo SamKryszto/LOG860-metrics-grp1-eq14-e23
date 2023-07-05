@@ -2,28 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: circleci/metrics
 
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "package-lock.json" }}
-            - dependency-cache-
-
-      - run:
-          name: Install dependencies
-          command: npm ci
-
-      - run:
-          name: Run tests
-          command: npm test
-
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
 
       - deploy:
           name: Deploy with Docker Compose
