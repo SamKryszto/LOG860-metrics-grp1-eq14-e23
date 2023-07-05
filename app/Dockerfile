@@ -3,9 +3,8 @@ FROM node:14
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY src/ /usr/src/app
-COPY package*.json /usr/src/app
+# Copy files
+COPY . .
 
 # Install dependencies
 RUN npm install -g nodemon
