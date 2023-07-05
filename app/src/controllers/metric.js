@@ -95,6 +95,35 @@ async function getSnapshots(req, res) {
     res.send(result);
 }
 
+// ----------------
+// CONTINUOUS INTEGRATION METRICS
+// ----------------
+
+async function getBuildTime(req, res) {
+    const { owner, repo } = req.query;
+    const id = req.params.id;
+    const result = await githubService.getBuildTime(repo, owner, id);
+    res.send(result);
+}
+
+async function getMeanBuildTime(req, res) {
+    const { owner, repo } = req.query;
+    const result = await githubService.getTaskLeadTime(repo, owner);
+    res.send(result);
+}
+
+async function getBuildSuccessPercentage(req, res) {
+    const result = await githubService.getTaskLeadTime(repo, owner);
+    res.send(result);
+}
+
+async function getTestSuccessPercentage(req, res) {
+    const { owner, repo } = req.query;
+    const id = req.params.id;
+    const result = await githubService.getTaskLeadTime(repo, owner);
+    res.send(result);
+}
+
 module.exports = {
     getTaskLeadTime,
     getLeadTime,
@@ -107,4 +136,8 @@ module.exports = {
     getPRReviewers,
     saveSnapshot,
     getSnapshots,
+    getBuildTime,
+    getMeanBuildTime,
+    getBuildSuccessPercentage,
+    getTestSuccessPercentage,
 };

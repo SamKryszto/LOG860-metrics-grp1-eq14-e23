@@ -216,6 +216,52 @@ async function getSnapshot() {
     return {};
 }
 
+// ----------------
+// KANBAN METRICS
+// ----------------
+
+async function getBuildTime(owner, repo, id) {
+    const { data } = await githubRequest(
+        requests.GET_PR_COMMENTS_COUNT,
+        owner,
+        repo,
+        id
+    );
+    const { totalCount } = data.repository.pullRequest.comments;
+    return `Number of comments for pull request ${id}: ${totalCount}.`;
+}
+
+async function getMeanBuildTime(owner, repo) {
+    const { data } = await githubRequest(
+        requests.GET_PR_COMMENTS_COUNT,
+        owner,
+        repo
+    );
+    const { totalCount } = data.repository.pullRequest.comments;
+    return `Number of comments for pull request ${id}: ${totalCount}.`;
+}
+
+async function getTestSuccessPercentage(owner, repo) {
+    const { data } = await githubRequest(
+        requests.GET_PR_COMMENTS_COUNT,
+        owner,
+        repo
+    );
+    const { totalCount } = data.repository.pullRequest.comments;
+    return `Number of comments for pull request ${id}: ${totalCount}.`;
+}
+
+async function getBuildSuccessPercentage(owner, repo) {
+    const { data } = await githubRequest(
+        requests.GET_PR_COMMENTS_COUNT,
+        owner,
+        repo
+    );
+    const { totalCount } = data.repository.pullRequest.comments;
+    return `Number of comments for pull request ${id}: ${totalCount}.`;
+}
+
+
 module.exports = {
     getTaskLeadTime,
     getLeadTime,
@@ -227,4 +273,8 @@ module.exports = {
     getPRCommentsCount,
     getPRReviewers,
     getSnapshot,
+    getBuildTime,
+    getMeanBuildTime,
+    getBuildSuccessPercentage,
+    getTestSuccessPercentage
 };

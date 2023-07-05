@@ -345,4 +345,14 @@ router.get("/pr_reviewers/:id", controller.getPRReviewers);
 router.post("/snapshot", controller.saveSnapshot);
 router.get("/snapshot", controller.getSnapshots);
 
+// ----------------
+// CONTINUOUS INTEGRATION METRICS
+// ----------------
+
+router.get("/build_time/:id", controller.getBuildTime);
+router.get("/mean_build_time", controller.getMeanBuildTime);
+router.get("/build_success", controller.getBuildSuccessPercentage);
+router.get("/test_success", controller.getTestSuccessPercentage);
+
+
 module.exports = router;

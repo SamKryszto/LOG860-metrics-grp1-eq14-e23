@@ -2,7 +2,8 @@
 
 const DEFAULT_OWNER = "SamKryszto";
 
-const DEFAULT_REPO = "Oxgen-OS---Eq-14--E23";
+//const DEFAULT_REPO_METRICS = "Metrics-grp01-eq14";
+const DEFAULT_REPO = "oxygen-cs-grp01-eq14";
 
 const BASE_QUERY = `
 {
@@ -98,6 +99,30 @@ const requests = {
         }
     `,
     GET_SNAPSHOT: `
+        projectsV2(first: 10) {
+            totalCount
+        }
+    `,
+
+    GET_BUILD_TIME: `
+        projectsV2(first: 10) {
+            totalCount
+        }
+    `,
+
+    GET_MEAN_BUILD_TIME: `
+        projectsV2(first: 10) {
+            totalCount
+        }
+    `,
+
+    GET_BUILD_SUCCESS: `
+        projectsV2(first: 10) {
+            totalCount
+        }
+    `,
+
+    GET_TEST_SUCCESS: `
         projectsV2(first: 10) {
             totalCount
         }
