@@ -8,22 +8,22 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - run:
-          name: Use secret
+          name: Check Docker Hub credentials
+          command: |
+            if [[ -z "${{ secrets.DOCKERHUB_PWD }}" || -z "${{ secrets.DOCKERHUB_ID }}" ]]; then
+              echo "ERROR: Docker Hub credentials not provided."
+              exit 1
+            fi
+      - run:
+          name: Use secret - ID
           command: echo $DOCKERHUB_ID
           environment:
             DOCKERHUB_ID: ${{ secrets.DOCKERHUB_ID }}
       - run:
-          name: Use secret
+          name: Use secret - PWD
           command: echo $DOCKERHUB_PWD
           environment:
             DOCKERHUB_PWD: ${{ secrets.DOCKERHUB_PWD }}
-      - run:
-          name: Check Docker Hub credentials
-          command: |
-            if [[ -z "$DOCKERHUB_PWD" || -z "$DOCKERHUB_ID" ]]; then
-              echo "ERROR: Docker Hub credentials not provided."
-              exit 1
-            fi
       - run:
           name: Build and deploy to Docker Hub
           command: |
