@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 20.10.8
+
+      - run:
+          name: Start Docker Compose
+          command: docker-compose up -d
+
+workflows:
+  version: 2.1
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
