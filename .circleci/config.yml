@@ -18,6 +18,13 @@ jobs:
           environment:
             DOCKERHUB_PWD: ${{ secrets.DOCKERHUB_PWD }}
       - run:
+          name: Check Docker Hub credentials
+          command: |
+            if [[ -z "$DOCKERHUB_PWD" || -z "$DOCKERHUB_ID" ]]; then
+              echo "ERROR: Docker Hub credentials not provided."
+              exit 1
+            fi
+      - run:
           name: Build and deploy to Docker Hub
           command: |
             echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
