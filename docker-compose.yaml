@@ -13,8 +13,9 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - "./app:/usr/src/app"
-      - /usr/src/app/node_modules
+      - "./app/src:/usr/src/app/src"
+    networks:
+      - network
 
   postgres:
     container_name: postgres
@@ -39,6 +40,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - network
 
   pgadmin:
     container_name: pgadmin
@@ -52,3 +55,8 @@ services:
       - "5050:80"
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
+
+networks:
+  network:
+    driver: bridge
+    name: postgres_network
