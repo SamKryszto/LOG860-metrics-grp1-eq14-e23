@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Build and deploy to Docker Hub
           command: |
-            echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin "$DOCKERHUB_ID"
+            echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker-compose up -d --build
             docker-compose push
 
