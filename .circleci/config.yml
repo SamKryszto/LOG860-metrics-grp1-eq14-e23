@@ -19,11 +19,7 @@ jobs:
           name: Push Docker images
           command: |
             echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
-            images=$(docker-compose images -q)
-            for image_id in $images; do
-              repository=$(docker image inspect --format='{{ index .RepoTags 0 }}' $image_id)
-              docker push $repository
-            done
+            docker push samkryszto/oxygen:latest
 workflows:
   version: 2
   build-and-deploy:
