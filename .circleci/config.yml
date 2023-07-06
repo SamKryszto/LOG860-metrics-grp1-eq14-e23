@@ -14,15 +14,11 @@ jobs:
           command: |
             export GITHUB_TOKEN=$GITHUB_TOKEN
             docker-compose up -d --build
-      # Log in to Docker Hub
-      - run:
-          name: Log in to Docker Hub
-          command: echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
-
       # Push all Docker images
       - run:
           name: Push Docker images
           command: |
+            echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
             images=$(docker-compose images -q)
             for image_id in $images; do
               repository=$(docker image inspect --format='{{ index .RepoTags 0 }}' $image_id)
