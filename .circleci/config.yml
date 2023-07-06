@@ -13,12 +13,15 @@ jobs:
           name: Build Docker image
           command: |
             export GITHUB_TOKEN=$GITHUB_TOKEN
-            docker-compose up -d
+            docker-compose up -d --build
       - run:
           name: Deploy to Docker Hub
           command: |
             echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
-            docker-compose push
+             images=$(docker-compose images -q)
+            for image in $images; do
+              docker push $image
+            done
 workflows:
   version: 2
   build-and-deploy:
