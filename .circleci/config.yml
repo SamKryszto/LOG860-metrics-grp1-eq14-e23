@@ -8,18 +8,13 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - run:
-          name: Check Docker Hub credentials
-          command: |
-            if [[ -z "$DOCKERHUB_PWD" || -z "$DOCKERHUB_ID" ]]; then
-              echo "ERROR: Docker Hub credentials not provided."
-              exit 1
-            fi
-      - run:
           name: Build and deploy to Docker Hub
           command: |
             echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
             docker-compose up -d --build
             docker-compose push
+             environment:
+              GITHUB_TOKEN: $GITHUB_TOKEN
 
 workflows:
   version: 2
