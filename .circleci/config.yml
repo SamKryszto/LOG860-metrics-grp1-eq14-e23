@@ -26,7 +26,7 @@ jobs:
             images=$(docker-compose images -q)
 
             for image_id in $images; do
-              # Rename the image with a numeric tag
+              # Rename the image with a numeric tag test
               new_tag=$((tag++))
               new_image_name="$repository:$new_tag"
               docker tag $image_id $new_image_name
