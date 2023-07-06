@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      IMAGE_NAME: Metrics 
     docker:
       - image: circleci/node:14
     steps:
@@ -8,11 +10,14 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - run:
-          name: Build and deploy to Docker Hub
+          name: Build Docker image
+          command: |
+            export GITHUB_TOKEN=$GITHUB_TOKEN
+            docker build --build -t $IMAGE_NAME:latest .
+      - run:
+          name: Deploy to Docker Hub
           command: |
             echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
-            export GITHUB_TOKEN=$GITHUB_TOKEN
-            docker-compose up -d --build
             docker-compose push
 workflows:
   version: 2
