@@ -24,30 +24,19 @@ jobs:
             pgadmin_repo="samkryszto/pgadmin"
             postgres_repo="samkryszto/postgres"
 
-            # Tag and push the images
-            docker-compose images --services | while read -r service; do
-              # Get the image ID for the service
-              image_id=$(docker-compose images -q $service)
+            # Get the image IDs for the services
+            images=($(docker-compose images -q))
 
-              # Tag the image with the corresponding repository and :latest tag
-              case $service in
-                metrics-app)
-                  docker tag $image_id $metrics_repo:latest
-                  docker push $metrics_repo:latest
-                  ;;
-                pgadmin)
-                  docker tag $image_id $pgadmin_repo:latest
-                  docker push $pgadmin_repo:latest
-                  ;;
-                postgres)
-                  docker tag $image_id $postgres_repo:latest
-                  docker push $postgres_repo:latest
-                  ;;
-                *)
-                  echo "Unknown service: $service"
-                  ;;
-              esac
-            done
+            # Assign the first three images to the corresponding repositories and push them with the 'latest' tag
+            docker tag ${images[0]} $metrics_repo:latest
+            docker push $metrics_repo:latest
+
+            docker tag ${images[1]} $pgadmin_repo:latest
+            docker push $pgadmin_repo:latest
+
+            docker tag ${images[2]} $postgres_repo:latest
+            docker push $postgres_repo:latest
+
 workflows:
   version: 2
   build-and-deploy:
