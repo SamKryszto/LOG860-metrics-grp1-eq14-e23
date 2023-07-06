@@ -13,7 +13,7 @@ jobs:
           name: Build Docker image
           command: |
             export GITHUB_TOKEN=$GITHUB_TOKEN
-            docker-compose up -t $IMAGE_NAME:latest . --build
+            docker-compose up -t $IMAGE_NAME:latest . 
       - run:
           name: Deploy to Docker Hub
           command: |
