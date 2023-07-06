@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     environment:
-      IMAGE_NAME: Metrics 
+      IMAGE_NAME: metrics 
     docker:
       - image: circleci/node:14
     steps:
