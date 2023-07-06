@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     environment:
-      IMAGE_NAME: metrics 
+      IMAGE_NAME: metrics
     docker:
       - image: circleci/node:14
     steps:
@@ -27,16 +27,30 @@ jobs:
             # Get the image IDs for the services
             images=($(docker-compose images -q))
 
-            # Assign the first three images to the corresponding repositories and push them with the 'latest' tag
-            docker tag ${images[0]} $metrics_repo:latest
-            docker push $metrics_repo:latest
+            # Get the build number
+            build_number=${CIRCLE_BUILD_NUM:-local}
 
-            docker tag ${images[1]} $pgadmin_repo:latest
-            docker push $pgadmin_repo:latest
+            # Assign the first three images to the corresponding repositories and push them with the build number as the tag
+            docker tag ${images[0]} $metrics_repo:$build_number
+            docker push $metrics_repo:$build_number
 
-            docker tag ${images[2]} $postgres_repo:latest
-            docker push $postgres_repo:latest
+            docker tag ${images[1]} $pgadmin_repo:$build_number
+            docker push $pgadmin_repo:$build_number
 
+            docker tag ${images[2]} $postgres_repo:$build_number
+            docker push $postgres_repo:$build_number
+
+            # Additionally, tag and push them as 'latest' if the build number is not 'local'
+            if [ "$build_number" != "local" ]; then
+              docker tag ${images[0]} $metrics_repo:latest
+              docker push $metrics_repo:latest
+
+              docker tag ${images[1]} $pgadmin_repo:latest
+              docker push $pgadmin_repo:latest
+
+              docker tag ${images[2]} $postgres_repo:latest
+              docker push $postgres_repo:latest
+            fi
 workflows:
   version: 2
   build-and-deploy:
@@ -44,4 +58,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: circleci-project-setup
+              only: main
