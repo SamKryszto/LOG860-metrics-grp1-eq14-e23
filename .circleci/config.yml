@@ -24,31 +24,30 @@ jobs:
             pgadmin_repo="samkryszto/pgadmin"
             postgres_repo="samkryszto/postgres"
 
-            # Get the image IDs for the services
-            images=($(docker-compose images -q))
-           
-            # Get the build number
-            build_number=${CIRCLE_BUILD_NUM:-local}
+            # Assign and push the metrics-app image
+            metrics_app_image=$(docker-compose images --format app metrics-app)
+            docker tag $metrics_app_image $metrics_repo:${CIRCLE_BUILD_NUM:-local}
+            docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
-            # Assign the first three images to the corresponding repositories and push them with the build number as the tag
-            docker tag ${images[0]} $metrics_repo:$build_number
-            docker push $metrics_repo:$build_number
+            # Assign and push the postgres image
+            postgres_image=$(docker-compose images --format postgres postgres)
+            docker tag $postgres_image $postgres_repo:${CIRCLE_BUILD_NUM:-local}
+            docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
 
-            docker tag ${images[1]} $postgres_repo:$build_number
-            docker push $postgres_repo:$build_number
+            # Assign and push the pgadmin image
+            pgadmin_image=$(docker-compose images --format pgadmin pgadmin)
+            docker tag $pgadmin_image $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
+            docker push $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
 
-            docker tag ${images[2]} $pgadmin_repo:$build_number
-            docker push $pgadmin_repo:$build_number
-            
             # Additionally, tag and push them as 'latest' if the build number is not 'local'
-            if [ "$build_number" != "local" ]; then
-              docker tag ${images[0]} $metrics_repo:latest
+            if [ "${CIRCLE_BUILD_NUM:-local}" != "local" ]; then
+              docker tag $metrics_app_image $metrics_repo:latest
               docker push $metrics_repo:latest
 
-              docker tag ${images[1]} $postgres_repo:latest
+              docker tag $postgres_image $postgres_repo:latest
               docker push $postgres_repo:latest
 
-              docker tag ${images[2]} $pgadmin_repo:latest
+              docker tag $pgadmin_image $pgadmin_repo:latest
               docker push $pgadmin_repo:latest
             fi
 workflows:
