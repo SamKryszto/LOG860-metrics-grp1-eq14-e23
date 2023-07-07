@@ -25,7 +25,7 @@ jobs:
             postgres_repo="samkryszto/postgres"
 
             # Get the image IDs for the services
-            images=$((docker-compose images -q))
+            images=($(docker-compose images -q))
            
             # Get the build number
             build_number=${CIRCLE_BUILD_NUM:-local}
