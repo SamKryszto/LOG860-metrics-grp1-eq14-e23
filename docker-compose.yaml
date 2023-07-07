@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   app:
+    container_name: metrics-app
     build: ./app
     ports:
       - "3000:3000"

@@ -25,7 +25,7 @@ jobs:
               postgres_repo="samkryszto/postgres"
 
               # Assign and push the metrics-app image
-              metrics_app_image=$(docker-compose images --format "{{.Repository}}:{{.Tag}}" app)
+              metrics_app_image=$(docker-compose images --format "{{.Repository}}:{{.Tag}}" metrics-app)
               docker tag $metrics_app_image $metrics_repo:${CIRCLE_BUILD_NUM:-local}
               docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
