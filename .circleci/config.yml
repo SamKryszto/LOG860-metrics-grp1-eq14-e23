@@ -46,10 +46,10 @@ jobs:
               docker push $metrics_repo:latest
 
               docker tag ${images[1]} $pgadmin_repo:latest
-              docker push $pgadmin_repo:latest
+              docker push $postgres_repo:latest
 
               docker tag ${images[2]} $postgres_repo:latest
-              docker push $postgres_repo:latest
+              docker push $pgadmin_repo:latest
             fi
 workflows:
   version: 2
