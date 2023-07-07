@@ -34,21 +34,21 @@ jobs:
             docker tag ${images[0]} $metrics_repo:$build_number
             docker push $metrics_repo:$build_number
 
-            docker tag ${images[1]} $pgadmin_repo:$build_number
-            docker push $pgadmin_repo:$build_number
-
-            docker tag ${images[2]} $postgres_repo:$build_number
+            docker tag ${images[1]} $postgres_repo:$build_number
             docker push $postgres_repo:$build_number
 
+            docker tag ${images[2]} $pgadmin_repo:$build_number
+            docker push $pgadmin_repo:$build_number
+            
             # Additionally, tag and push them as 'latest' if the build number is not 'local'
             if [ "$build_number" != "local" ]; then
               docker tag ${images[0]} $metrics_repo:latest
               docker push $metrics_repo:latest
 
-              docker tag ${images[1]} $pgadmin_repo:latest
+              docker tag ${images[1]} $postgres_repo:latest
               docker push $postgres_repo:latest
 
-              docker tag ${images[2]} $postgres_repo:latest
+              docker tag ${images[2]} $pgadmin_repo:latest
               docker push $pgadmin_repo:latest
             fi
 workflows:
