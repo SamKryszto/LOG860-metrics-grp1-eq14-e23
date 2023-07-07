@@ -16,40 +16,40 @@ jobs:
             docker-compose up -d --build
       # Push all Docker images
       - run:
-          name: Push Docker images
-          command: |
-            echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
-            # Define the repository names
-            metrics_repo="samkryszto/metrics-app"
-            pgadmin_repo="samkryszto/pgadmin"
-            postgres_repo="samkryszto/postgres"
+            name: Push Docker images
+            command: |
+              echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_ID" --password-stdin
+              # Define the repository names
+              metrics_repo="samkryszto/metrics-app"
+              pgadmin_repo="samkryszto/pgadmin"
+              postgres_repo="samkryszto/postgres"
 
-            # Assign and push the metrics-app image
-            metrics_app_image=$(docker-compose images --format app metrics-app)
-            docker tag $metrics_app_image $metrics_repo:${CIRCLE_BUILD_NUM:-local}
-            docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
+              # Assign and push the metrics-app image
+              metrics_app_image=$(docker-compose images --format "{{.Repository}}:{{.Tag}}" app)
+              docker tag $metrics_app_image $metrics_repo:${CIRCLE_BUILD_NUM:-local}
+              docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
-            # Assign and push the postgres image
-            postgres_image=$(docker-compose images --format postgres postgres)
-            docker tag $postgres_image $postgres_repo:${CIRCLE_BUILD_NUM:-local}
-            docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
+              # Assign and push the postgres image
+              postgres_image=$(docker-compose images --format "{{.Repository}}:{{.Tag}}" postgres)
+              docker tag $postgres_image $postgres_repo:${CIRCLE_BUILD_NUM:-local}
+              docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
 
-            # Assign and push the pgadmin image
-            pgadmin_image=$(docker-compose images --format pgadmin pgadmin)
-            docker tag $pgadmin_image $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
-            docker push $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
+              # Assign and push the pgadmin image
+              pgadmin_image=$(docker-compose images --format "{{.Repository}}:{{.Tag}}" pgadmin)
+              docker tag $pgadmin_image $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
+              docker push $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
 
-            # Additionally, tag and push them as 'latest' if the build number is not 'local'
-            if [ "${CIRCLE_BUILD_NUM:-local}" != "local" ]; then
-              docker tag $metrics_app_image $metrics_repo:latest
-              docker push $metrics_repo:latest
+              # Additionally, tag and push them as 'latest' if the build number is not 'local'
+              if [ "${CIRCLE_BUILD_NUM:-local}" != "local" ]; then
+                docker tag $metrics_app_image $metrics_repo:latest
+                docker push $metrics_repo:latest
 
-              docker tag $postgres_image $postgres_repo:latest
-              docker push $postgres_repo:latest
+                docker tag $postgres_image $postgres_repo:latest
+                docker push $postgres_repo:latest
 
-              docker tag $pgadmin_image $pgadmin_repo:latest
-              docker push $pgadmin_repo:latest
-            fi
+                docker tag $pgadmin_image $pgadmin_repo:latest
+                docker push $pgadmin_repo:latest
+              fi
 workflows:
   version: 2
   build-and-deploy:
