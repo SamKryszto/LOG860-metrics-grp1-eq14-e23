@@ -27,7 +27,7 @@ jobs:
             postgres_repo="samkryszto/postgres"
 
             # Assign and push the metrics-app image
-            docker tag metrics-app:latest $metrics_repo:${CIRCLE_BUILD_NUM:-local}
+            docker tag metrics-app $metrics_repo:${CIRCLE_BUILD_NUM:-local}
             docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the postgres image
@@ -35,7 +35,7 @@ jobs:
             docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the pgadmin image
-            docker tag dpage/pgadmin4:latest $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
+            docker tag dpage/pgadmin4 $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
             docker push $pgadmin_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Additionally, tag and push them as 'latest' if the build number is not 'local'
