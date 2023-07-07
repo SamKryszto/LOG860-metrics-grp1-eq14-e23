@@ -2,6 +2,7 @@ version: '3.7'
 services:
   app:
     container_name: metrics-app
+    image: metrics-app
     build: ./app
     ports:
       - "3000:3000"
@@ -21,6 +22,7 @@ services:
   postgres:
     container_name: postgres
     image: postgres:latest
+    image_name: postgres
     restart: always
     environment:
       - POSTGRES_USER=postgres
