@@ -14,6 +14,9 @@ jobs:
           command: |
             export GITHUB_TOKEN=$GITHUB_TOKEN
             docker-compose up -d --build
+      - run:
+          name: List container images
+          command: docker ps --format "{{.Image}}"
       # Push all Docker images
       - run:
             name: Push Docker images
