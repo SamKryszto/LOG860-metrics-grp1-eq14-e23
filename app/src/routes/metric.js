@@ -342,7 +342,6 @@ router.get("/pr_reviewers/:id", controller.getPRReviewers);
 // ----------------
 // VISUALIZATION METRICS
 // ----------------
-router.post("/snapshot", controller.saveSnapshot);
-router.get("/snapshot", controller.getSnapshots);
+router.put("/snapshot", controller.takeSnapshot);
 
 module.exports = router;

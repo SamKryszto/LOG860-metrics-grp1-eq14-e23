@@ -1,4 +1,5 @@
-const models = require("../models/models"); // Import your Sequelize models
+const db = require("../models");
+const models = require("../models"); // Import your Sequelize models
 const githubService = require("../services/github");
 
 async function getTaskLeadTime(req, res) {
@@ -82,16 +83,26 @@ async function getPRReviewers(req, res) {
 // VISUALIZATION METRICS
 // ----------------
 
-async function saveSnapshot(req, res) {
-    const result = await githubService.getSnapshot();
-    // TODO: save result in database
-    res.send(result);
-}
-
-async function getSnapshots(req, res) {
-    const { startDate, endDate, period } = req.params;
+async function takeSnapshot(req, res) {
+    // TODO: take snapshot of kanban board
+    const { owner, repo } = req.params;
+    const kanbanBoard = githubService.getKanbanBoard(owner, repo);
     const result = [];
-    // TODO: fetch from database
+    // get kanban board
+    console.log("inserting to issues");
+    // TODO:
+    // create columns
+    // create kanbansnapshot
+    // const snapshot = await db.kanbanSnapshots.create({});
+    // const { snapshotId } = snapshot.dataValues;
+    // console.log("new id: " + snapshotId);
+    // try {
+    //     await db.issues.create({
+    //         title: "test",
+    //     });
+    // } catch (e) {
+    //     console.log(e);
+    // }
     res.send(result);
 }
 
@@ -105,6 +116,5 @@ module.exports = {
     getPRMergeTime,
     getPRCommentsCount,
     getPRReviewers,
-    saveSnapshot,
-    getSnapshots,
+    takeSnapshot,
 };

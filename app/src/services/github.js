@@ -210,7 +210,7 @@ async function getPRReviewers(owner, repo, id) {
 // ----------------
 
 // NOTE: USED IN CRONJOB
-async function getSnapshot() {
+async function getKanbanSnapshot() {
     // TODO: implement
     const data = await githubRequest(requests.GET_SNAPSHOT);
     return {};
@@ -226,5 +226,5 @@ module.exports = {
     getPRMergeTime,
     getPRCommentsCount,
     getPRReviewers,
-    getSnapshot,
+    getKanbanSnapshot,
 };
