@@ -22,7 +22,7 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:alpine
     restart: always
     environment:
       - POSTGRES_USER=postgres

@@ -4,7 +4,7 @@ jobs:
     environment:
       IMAGE_NAME: metrics
     docker:
-      - image: circleci/node:14-alpine
+      - image: circleci/node:14
     steps:
       - checkout
       - setup_remote_docker:
@@ -31,7 +31,7 @@ jobs:
             docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the postgres image
-            docker tag postgres:latest $postgres_repo:${CIRCLE_BUILD_NUM:-local}
+            docker tag postgres:alpine $postgres_repo:${CIRCLE_BUILD_NUM:-local}
             docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the pgadmin image
@@ -43,7 +43,7 @@ jobs:
               docker tag metrics-app:latest $metrics_repo:latest
               docker push $metrics_repo:latest
 
-              docker tag postgres:latest $postgres_repo:latest
+              docker tag postgres:alpine $postgres_repo:latest
               docker push $postgres_repo:latest
 
               docker tag dpage/pgadmin4:latest $pgadmin_repo:latest
