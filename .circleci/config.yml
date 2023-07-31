@@ -31,7 +31,7 @@ jobs:
             docker push $metrics_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the postgres image
-            docker tag postgres:latest $postgres_repo:${CIRCLE_BUILD_NUM:-local}
+            docker tag postgres:alpine $postgres_repo:${CIRCLE_BUILD_NUM:-local}
             docker push $postgres_repo:${CIRCLE_BUILD_NUM:-local}
 
             # Assign and push the pgadmin image
