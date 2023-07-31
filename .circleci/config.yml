@@ -43,7 +43,7 @@ jobs:
               docker tag metrics-app:latest $metrics_repo:latest
               docker push $metrics_repo:latest
 
-              docker tag postgres:latest $postgres_repo:latest
+              docker tag postgres:alpine $postgres_repo:latest
               docker push $postgres_repo:latest
 
               docker tag dpage/pgadmin4:latest $pgadmin_repo:latest
