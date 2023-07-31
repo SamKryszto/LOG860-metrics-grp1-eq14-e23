@@ -18,6 +18,7 @@ services:
       - "./app/src:/usr/src/app/src"
     networks:
       - network
+      - network2
 
   postgres:
     container_name: postgres
@@ -62,3 +63,6 @@ networks:
   network:
     driver: bridge
     name: postgres_network
+  network2:
+    driver: bridge
+    name: cronjob_network

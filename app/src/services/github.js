@@ -123,7 +123,9 @@ async function getActiveTasksCount(repo, owner, columnName) {
         });
     });
 
-    return `Status Counts for column '${columnName}': ${columnCounts[columnName] ?? 0}`;
+    return `Status Counts for column '${columnName}': ${
+        columnCounts[columnName] ?? 0
+    }`;
 }
 
 async function getCompletedTasksCount(repo, owner, start, end) {
@@ -210,10 +212,31 @@ async function getPRReviewers(owner, repo, id) {
 // ----------------
 
 // NOTE: USED IN CRONJOB
-async function getSnapshot() {
+async function getSnapshot(owner, repo) {
     // TODO: implement
-    const data = await githubRequest(requests.GET_SNAPSHOT);
-    return {};
+    const { data } = await githubRequest(requests.GET_SNAPSHOT, owner, repo);
+    let issues = data.repository.projectsV2.nodes[0].view.project.items.nodes;
+    const kanbanBoard = {
+        snapshotDate: new Date(),
+        repo: repo ?? DEFAULT_REPO,
+        owner: owner ?? DEFAULT_OWNER,
+    };
+    if (issues) {
+        kanbanBoard.issues = issues
+            .filter((i) => Object.keys(i.content).length > 0)
+            .filter((i) => i.content.state != "CLOSED")
+            .map((i) => {
+                let { title, assignees, labels, milestone } = i.content;
+                milestone = milestone.title;
+                title = title.trim();
+                assignees = assignees.nodes.map((a) => a.login);
+                labels = labels.nodes.map((l) => l.name);
+                const { name: column } = i.fieldValueByName;
+                return { title, assignees, labels, milestone, column };
+            });
+    }
+
+    return kanbanBoard;
 }
 
 module.exports = {

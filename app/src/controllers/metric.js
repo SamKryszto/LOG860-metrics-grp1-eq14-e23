@@ -1,4 +1,5 @@
-const models = require("../models/models"); // Import your Sequelize models
+const db = require("../models");
+const models = require("../models"); // Import your Sequelize models
 const githubService = require("../services/github");
 
 async function getTaskLeadTime(req, res) {
@@ -82,16 +83,37 @@ async function getPRReviewers(req, res) {
 // VISUALIZATION METRICS
 // ----------------
 
-async function saveSnapshot(req, res) {
-    const result = await githubService.getSnapshot();
-    // TODO: save result in database
-    res.send(result);
+async function createIssues(issues, snapshotId) {
+    try {
+        await db.issues.bulkCreate(issues.map((i) => ({ ...i, snapshotId })));
+    } catch (e) {
+        throw new Error(`Could not create issues for snapshot ${snapshotId}`);
+    }
 }
 
-async function getSnapshots(req, res) {
-    const { startDate, endDate, period } = req.params;
-    const result = [];
-    // TODO: fetch from database
+async function createSnapshot({ snapshotDate, owner, repo, issues }) {
+    try {
+        const { dataValues } = await db.kanbanSnapshots.create({
+            snapshotDate,
+            owner,
+            repo,
+        });
+        const { snapshotId } = dataValues;
+        if (!snapshotId) {
+            throw new Error("Could not create snapshot");
+        }
+        await createIssues(issues, snapshotId);
+        return `Success creating snapshot ${snapshotId}`;
+    } catch (e) {
+        console.err(e);
+        return e.message;
+    }
+}
+
+async function getSnapshot(req, res) {
+    const { owner, repo } = req.params;
+    const snapshot = await githubService.getSnapshot(owner, repo);
+    const result = await createSnapshot(snapshot);
     res.send(result);
 }
 
@@ -105,6 +127,5 @@ module.exports = {
     getPRMergeTime,
     getPRCommentsCount,
     getPRReviewers,
-    saveSnapshot,
-    getSnapshots,
+    getSnapshot,
 };

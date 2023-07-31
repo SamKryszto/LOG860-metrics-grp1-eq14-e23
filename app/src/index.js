@@ -4,6 +4,7 @@ const port = process.env.PORT;
 const metricRouter = require("./routes/metric");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+const db = require("./models");
 
 const swaggerDefinition = {
     openapi: "3.0.0",
@@ -31,6 +32,9 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/metric", metricRouter);
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+// wait until databse is sync
+db.sync().then(() => {
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}`);
+    });
+}).catch(console.error)
