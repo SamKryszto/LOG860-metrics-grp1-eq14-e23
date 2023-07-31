@@ -83,26 +83,37 @@ async function getPRReviewers(req, res) {
 // VISUALIZATION METRICS
 // ----------------
 
-async function takeSnapshot(req, res) {
-    // TODO: take snapshot of kanban board
+async function createIssues(issues, snapshotId) {
+    try {
+        await db.issues.bulkCreate(issues.map((i) => ({ ...i, snapshotId })));
+    } catch (e) {
+        throw new Error(`Could not create issues for snapshot ${snapshotId}`);
+    }
+}
+
+async function createSnapshot({ snapshotDate, owner, repo, issues }) {
+    try {
+        const { dataValues } = await db.kanbanSnapshots.create({
+            snapshotDate,
+            owner,
+            repo,
+        });
+        const { snapshotId } = dataValues;
+        if (!snapshotId) {
+            throw new Error("Could not create snapshot");
+        }
+        await createIssues(issues, snapshotId);
+        return `Success creating snapshot ${snapshotId}`;
+    } catch (e) {
+        console.err(e);
+        return e.message;
+    }
+}
+
+async function getSnapshot(req, res) {
     const { owner, repo } = req.params;
-    const kanbanBoard = githubService.getKanbanBoard(owner, repo);
-    const result = [];
-    // get kanban board
-    console.log("inserting to issues");
-    // TODO:
-    // create columns
-    // create kanbansnapshot
-    // const snapshot = await db.kanbanSnapshots.create({});
-    // const { snapshotId } = snapshot.dataValues;
-    // console.log("new id: " + snapshotId);
-    // try {
-    //     await db.issues.create({
-    //         title: "test",
-    //     });
-    // } catch (e) {
-    //     console.log(e);
-    // }
+    const snapshot = await githubService.getSnapshot(owner, repo);
+    const result = await createSnapshot(snapshot);
     res.send(result);
 }
 
@@ -116,5 +127,5 @@ module.exports = {
     getPRMergeTime,
     getPRCommentsCount,
     getPRReviewers,
-    takeSnapshot,
+    getSnapshot,
 };

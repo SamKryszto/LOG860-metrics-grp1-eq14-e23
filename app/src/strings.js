@@ -29,79 +29,116 @@ const requests = {
     `,
 
     GET_ACTIVE_TASKS_COUNT: `
-        projectsV2(first: 1) {
-            nodes {
-                view(number: 1) {
-                    project {
-                        items(first: 100) {
-                            nodes {
-                                fieldValues(first: 100) {
-                                    edges {
-                                        node {
-                                            ... on ProjectV2ItemFieldSingleSelectValue {
-                                                name
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `,
+		projectsV2(first: 1) {
+			nodes {
+				view(number: 1) {
+					project {
+						items(first: 100) {
+							nodes {
+								fieldValues(first: 100) {
+									edges {
+										node {
+											... on ProjectV2ItemFieldSingleSelectValue {
+												name
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	`,
     GET_COMPLETED_TASKS_COUNT: `
-        issues(first: 100, filterBy: {states: CLOSED}) {
-            nodes {
-                number
-                createdAt
-                closedAt
-            }
-        }
-    `,
+		issues(first: 100, filterBy: {states: CLOSED}) {
+			nodes {
+				number
+				createdAt
+				closedAt
+			}
+		}
+	`,
     GET_PR_COUNT: `
-        pullRequests(first: 100) {
-            totalCount
-        }
-    `,
+		pullRequests(first: 100) {
+			totalCount
+		}
+	`,
     GET_PR_STATE: `
-        pullRequest(number: %s) {
-            state
-        }
-    `,
+		pullRequest(number: %s) {
+			state
+		}
+	`,
     GET_PR_MERGE_TIME: `
-        pullRequest(number: %s) {
-            mergedAt
-            createdAt
-        }
-    `,
+		pullRequest(number: %s) {
+			mergedAt
+			createdAt
+		}
+	`,
     GET_PR_COMMENTS_COUNT: `
-        pullRequest(number: %s) {
-            comments {
-                totalCount
-            }
-            title
-        }
-    `,
+		pullRequest(number: %s) {
+			comments {
+				totalCount
+			}
+			title
+		}
+	`,
     GET_PR_REVIEWERS: `
-        pullRequest(number: %s) {
-            reviewRequests(first: 10) {
-                nodes {
-                    requestedReviewer {
-                        ... on User {
-                            login
-                        }
-                    }
-                }
-            }
-        }
-    `,
+		pullRequest(number: %s) {
+			reviewRequests(first: 10) {
+				nodes {
+					requestedReviewer {
+						... on User {
+							login
+						}
+					}
+				}
+			}
+		}
+	`,
     GET_SNAPSHOT: `
-        projectsV2(first: 10) {
-            totalCount
-        }
-    `,
+		projectsV2(first: 1) {
+			nodes {
+				view(number: 1) {
+					id
+					name
+					project {
+						items(first: 100) {
+							nodes {
+								content {
+									... on Issue {
+										id
+										title
+										state
+										assignees(first: 10) {
+											nodes {
+												login
+											}
+										}
+										labels(first: 10) {
+											nodes {
+												name
+											}
+										}
+										milestone {
+											title
+										}
+									}
+								}
+								fieldValueByName(name: "Status") {
+									... on ProjectV2ItemFieldSingleSelectValue {
+										id
+										name
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	`,
 };
 
 module.exports = { requests, DEFAULT_OWNER, DEFAULT_REPO, BASE_QUERY };

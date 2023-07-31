@@ -6,11 +6,10 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
         },
         title: Sequelize.STRING,
-        description: Sequelize.STRING,
-        asssignees: Sequelize.ARRAY(Sequelize.STRING),
+        assignees: Sequelize.ARRAY(Sequelize.STRING),
         labels: Sequelize.ARRAY(Sequelize.STRING),
-        milestones: Sequelize.ARRAY(Sequelize.STRING),
-        status: Sequelize.STRING,
+        milestone: Sequelize.STRING,
+        column: Sequelize.STRING,
     });
     return Issue;
 };
