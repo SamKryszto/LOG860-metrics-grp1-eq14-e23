@@ -56,4 +56,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: main
+              only: docker-postgres-image-size-reduction
