@@ -222,20 +222,21 @@ async function getSnapshot(owner, repo) {
         owner: owner ?? DEFAULT_OWNER,
     };
     if (issues) {
-        kanbanBoard.issues = issues
+        kanbanBoard.columns = issues
             .filter((i) => Object.keys(i.content).length > 0)
             .filter((i) => i.content.state != "CLOSED")
-            .map((i) => {
-                let { title, assignees, labels, milestone } = i.content;
-                milestone = milestone.title;
-                title = title.trim();
-                assignees = assignees.nodes.map((a) => a.login);
-                labels = labels.nodes.map((l) => l.name);
-                const { name: column } = i.fieldValueByName;
-                return { title, assignees, labels, milestone, column };
-            });
+            .reduce((map, i) => {
+                const { name: columnName } = i.fieldValueByName;
+                if (map.has(columnName)) {
+                    const column = map.get(columnName);
+                    column.issuesCount++;
+                } else {
+                    const column = { name: columnName, issuesCount: 1 };
+                    map.set(columnName, column);
+                }
+                return map;
+            }, new Map());
     }
-
     return kanbanBoard;
 }
 

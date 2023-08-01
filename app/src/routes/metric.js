@@ -349,19 +349,6 @@ router.get("/pr_reviewers/:id", controller.getPRReviewers);
  *     put:
  *         summary: Take a snapshot of Kanban Board.
  *         description: Take a snapshot of Kanban Board.
- *         parameters:
- *             - in: query
- *               name: owner
- *               required: false
- *               description: Owner of repository
- *               schema:
- *                   type: string
- *             - in: query
- *               name: repo
- *               required: false
- *               description: Repository where to retrieve issues
- *               schema:
- *                   type: string
  *         responses:
  *          200:
  *           description: Lead time of each issue.

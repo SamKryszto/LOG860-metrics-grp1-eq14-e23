@@ -14,11 +14,11 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.kanbanSnapshots = require("./kanbanSnapshot")(sequelize, Sequelize);
-db.issues = require("./issue")(sequelize, Sequelize);
+db.kanbanColumns = require("./kanbanColumn")(sequelize, Sequelize);
 
 // Define associations between models (if applicable)
 // For example, if a Task has a foreign key column referencing a PullRequest:
-db.kanbanSnapshots.hasMany(db.issues, { foreignKey: "snapshotId" });
+db.kanbanSnapshots.hasMany(db.kanbanColumns, { foreignKey: "snapshotId" });
 
 db.sync = async () => {
     // Sync the models with the database
