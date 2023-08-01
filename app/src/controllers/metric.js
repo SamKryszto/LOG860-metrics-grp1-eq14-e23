@@ -83,15 +83,19 @@ async function getPRReviewers(req, res) {
 // VISUALIZATION METRICS
 // ----------------
 
-async function createIssues(issues, snapshotId) {
+async function createColumns(columns, snapshotId) {
     try {
-        await db.issues.bulkCreate(issues.map((i) => ({ ...i, snapshotId })));
+        columns = Array.from(columns.values()).map((c) => ({
+            ...c,
+            snapshotId,
+        }));
+        await db.kanbanColumns.bulkCreate(columns);
     } catch (e) {
-        throw new Error(`Could not create issues for snapshot ${snapshotId}`);
+        throw new Error(`Could not create columns for snapshot ${snapshotId}`);
     }
 }
 
-async function createSnapshot({ snapshotDate, owner, repo, issues }) {
+async function createSnapshot({ snapshotDate, owner, repo, columns }) {
     try {
         const { dataValues } = await db.kanbanSnapshots.create({
             snapshotDate,
@@ -102,10 +106,10 @@ async function createSnapshot({ snapshotDate, owner, repo, issues }) {
         if (!snapshotId) {
             throw new Error("Could not create snapshot");
         }
-        await createIssues(issues, snapshotId);
+        await createColumns(columns, snapshotId);
         return `Success creating snapshot ${snapshotId}`;
     } catch (e) {
-        console.err(e);
+        console.error(e);
         return e.message;
     }
 }
