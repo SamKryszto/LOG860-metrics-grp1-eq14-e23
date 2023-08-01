@@ -237,7 +237,6 @@ async function getSnapshot(owner, repo) {
                 return map;
             }, new Map());
     }
-
     return kanbanBoard;
 }
 

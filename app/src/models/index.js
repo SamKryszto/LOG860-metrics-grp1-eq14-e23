@@ -14,7 +14,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.kanbanSnapshots = require("./kanbanSnapshot")(sequelize, Sequelize);
-// db.issues = require("./issue")(sequelize, Sequelize);
 db.kanbanColumns = require("./kanbanColumn")(sequelize, Sequelize);
 
 // Define associations between models (if applicable)
