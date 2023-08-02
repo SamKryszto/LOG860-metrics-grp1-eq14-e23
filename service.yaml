@@ -4,7 +4,7 @@ metadata:
   name: postgres
 spec:
   selector:
-    app: postgres
+    app: postgres-app
   ports:
     - protocol: TCP
       port: 5432  # Port on which your PostgreSQL database is running
