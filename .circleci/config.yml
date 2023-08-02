@@ -49,6 +49,57 @@ jobs:
               docker tag dpage/pgadmin4:latest $pgadmin_repo:latest
               docker push $pgadmin_repo:latest
             fi
+  deploy:
+      docker:
+        - image: circleci/node:14
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 20.10.24
+
+        - run:
+            name: Install kubectl
+            command: |
+              curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+              chmod +x kubectl
+              sudo mv kubectl /usr/local/bin/
+
+        - run:
+            name: Configure kubectl
+            command: |
+              mkdir -p /home/circleci/.kube
+              mv /home/circleci/project/.kube/kubeconfig /home/circleci/.kube/config
+
+        # Create Kubernetes Secrets from CircleCI Secrets 
+       
+        - run:
+            name: Apply Secrets
+            command: |
+              export KUBECONFIG=/home/circleci/.kube/config
+               kubectl delete secret db-secrets
+              # Set up the Kubernetes Secret using CircleCI secrets as environment variables
+              echo "Creating my-secrets in grp1-team14-namespace"
+              kubectl create secret generic db-secrets \
+                --from-literal=postgres_user="$POSTGRES_USER" \
+                --from-literal=postgres_password="$POSTGRES_PASSWORD" \
+                --from-literal=github_token="$GITHUB_TOKEN" -n grp1-team14-namespace
+
+        - run:
+            name: Deploy to Kubernetes (postgres)
+            command: |
+              # Set the KUBECONFIG environment variable to the config file path
+              export KUBECONFIG=/home/circleci/.kube/config
+
+              # Make sure you are in the correct directory (where deployment.yaml is located)
+              cd /home/circleci/project
+
+              # Use kubectl to apply the deployment.yaml file
+              kubectl apply -f service.yaml
+              kubectl apply -f metrics-service.yaml
+              kubectl apply -f loadbalancer.yaml
+              kubectl apply -f postgres-deployment.yaml
+              kubectl apply -f metrics-deployment.yaml
+              # Additional kubectl commands for deployments, service updates, etc.
 workflows:
   version: 2
   build-and-deploy:
@@ -57,3 +108,9 @@ workflows:
           filters:
             branches:
               only: main
+      - deploy:
+         # requires:
+            #- build
+          filters:
+            branches:
+             only: kubernetes-deployment

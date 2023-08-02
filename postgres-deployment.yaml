@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1  # Number of replicas (pods) for high availability
+  selector:
+    matchLabels:
+      app: postgres-app
+  template:
+    metadata:
+      labels:
+        app: postgres-app
+    spec:
+      containers:
+        - name: postgres-container
+          image: samkryszto/postgres:latest
+          env:
+          - name: POSTGRES_MAX_CONNECTIONS
+            value: "100"
+          - name: PG_DATA
+            value: "./data/postgres-data"
+          - name: PG_USER
+            value: "postgres"
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: postgres_password
+          ports:
+            - containerPort: 5432  # /Replace with your application's exposed port
+          resources:
+            limits:
+              cpu: "100m"  # CPU limit set to 500 milliCPU
+              memory: "100Mi"  # Memory limit set to 500 MiB
+            requests:
+              cpu: "0m"  # Minimum CPU request set to 100 milliCPU
+              memory: "0Mi"  # Minimum memory request set to 100 MiB

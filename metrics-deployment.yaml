@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-deployment
+spec:
+  replicas: 1  # Number of replicas (pods) for high availability
+  selector:
+    matchLabels:
+      app: metrics-app
+  template:
+    metadata:
+      labels:
+        app: metrics-app
+    spec:
+      containers:
+        - name: metrics-container
+          image: samkryszto/metrics-app:latest
+          env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: postgres_password
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: github_token
+          - name: PORT
+            value: "3000"
+          ports:
+            - containerPort: 3000  # /Replace with your application's exposed port
+          resources:
+            limits:
+              cpu: "100m"  # CPU limit set to 500 milliCPU
+              memory: "100Mi"  # Memory limit set to 500 MiB
+            requests:
+              cpu: "0m"  # Minimum CPU request set to 100 milliCPU
+              memory: "0Mi"  # Minimum memory request set to 100 MiB
