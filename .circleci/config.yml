@@ -95,7 +95,7 @@ jobs:
 
               # Use kubectl to apply the deployment.yaml file
               kubectl apply -f service.yaml
-              kubectl apply -f loadBalancer.yaml
+              kubectl apply -f loadbalancer.yaml
               kubectl apply -f postgres-deployment.yaml
               # Additional kubectl commands for deployments, service updates, etc.
 workflows:
