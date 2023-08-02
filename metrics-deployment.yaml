@@ -31,6 +31,8 @@ spec:
               secretKeyRef:
                 name: db-secrets
                 key: github_token
+          - name: PORT
+            value: "3000"
           ports:
             - containerPort: 3000  # /Replace with your application's exposed port
           resources:
