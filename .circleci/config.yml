@@ -79,8 +79,8 @@ jobs:
               # Set up the Kubernetes Secret using CircleCI secrets as environment variables
               echo "Creating my-secrets in grp1-team14-namespace"
               kubectl create secret generic db-secrets \
-                --from-literal=postgres_user="$POSTGRES_USER"
-                --from-literal=postgres_password="$POSTGRES_PASSWORD"
+                --from-literal=postgres_user="$POSTGRES_USER" \
+                --from-literal=postgres_password="$POSTGRES_PASSWORD" \
                 --from-literal=github_token="$GITHUB_TOKEN" -n grp1-team14-namespace
 
         - run:
