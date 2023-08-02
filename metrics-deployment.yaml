@@ -29,7 +29,7 @@ spec:
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
-                name: db_secrets
+                name: db-secrets
                 key: github_token
           ports:
             - containerPort: 3000  # /Replace with your application's exposed port
