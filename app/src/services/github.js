@@ -224,7 +224,7 @@ async function getSnapshot(owner, repo) {
     if (issues) {
         kanbanBoard.columns = issues
             .filter((i) => Object.keys(i.content).length > 0)
-            .filter((i) => i.content.state != "CLOSED")
+            // .filter((i) => i.content.state != "CLOSED")
             .reduce((map, i) => {
                 const { name: columnName } = i.fieldValueByName;
                 if (map.has(columnName)) {
